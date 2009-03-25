@@ -1,5 +1,1 @@
-# Put your extension routes here.
-
-# map.namespace :admin do |admin|
-#   admin.resources :whatever
-# end  
+map.admin_update_product_product_properties 'admin/products/:product_id/product_properties/update_all',   :controller => 'admin/product_properties', :action => 'update_all', :conditions => {:method => :put}

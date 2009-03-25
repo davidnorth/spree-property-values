@@ -1,0 +1,45 @@
+<%= render :partial => 'admin/shared/product_sub_menu' %>
+
+<%= render :partial => 'admin/shared/product_tabs', :locals => {:current => "Product Properties"} %>
+
+<% form_for(@product, :url => admin_update_product_product_properties_path, :html => {:method => :put}) do |product_form| %>
+<table class="index">
+  <thead>
+    <tr>
+      <th><%= t("property") %></th>
+      <th><%= t("value") %></th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody id="product_properties">
+    <% product_form.fields_for :product_properties do |f| %>
+		<tr>
+		  <td><%= f.object.property.presentation %> (<%= f.object.property.name %>)</td>
+		  <td><%= f.collection_select :value, f.object.property.property_values, :name, :presentation %></td>
+      <td class="actions">
+        <%= f.label :_delete, 'Remove:' %>
+        <%= f.check_box :_delete %>
+      </td>
+		</tr>
+		<% end %>
+	</tbody>
+</table>
+<p class="form-buttons">
+  <button><span><%= t("update") %></span></button>
+</p>
+<% end %>
+
+<% unused_properties = Property.all - @product.properties %>
+
+<% unless unused_properties.empty? %>
+  <% form_for :product_property, :url => admin_product_product_properties_path(@product) do |f| %>
+    <fieldset>
+      <legend>Add a new property to this product</legend>
+      <%= f.label :property_id, 'Property' %>
+      <%= f.collection_select :property_id, unused_properties, :id, :presentation %> &nbsp; 
+      <%= f.label :value %>
+      <%= f.text_field :value %>
+      <input type="submit" value="Add" />
+    </fieldset>
+  <% end %>
+<% end %>
