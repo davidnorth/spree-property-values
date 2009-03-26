@@ -17,20 +17,20 @@
 		  <td><%= f.object.property.presentation %> (<%= f.object.property.name %>)</td>
 		  <td><%= f.collection_select :value, f.object.property.property_values, :name, :presentation %></td>
       <td class="actions">
-        <%= f.label :_delete, 'Remove:' %>
-        <%= f.check_box :_delete %>
+        <label><%= f.check_box :_delete %> Remove</label>
       </td>
 		</tr>
 		<% end %>
 	</tbody>
 </table>
-<p class="form-buttons">
+<p>
   <button><span><%= t("update") %></span></button>
 </p>
 <% end %>
 
 <% unused_properties = Property.all - @product.properties %>
 
+<%= error_messages_for :product_property %>
 <% unless unused_properties.empty? %>
   <% form_for :product_property, :url => admin_product_product_properties_path(@product) do |f| %>
     <fieldset>
