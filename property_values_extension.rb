@@ -19,7 +19,7 @@ class PropertyValuesExtension < Spree::Extension
     end
 
     Property.class_eval do
-      has_many :property_values, :attributes => true
+      has_many :property_values, :attributes => true, :dependent => :destroy
       accepts_nested_attributes_for :property_values, :allow_destroy => true
     end
     
